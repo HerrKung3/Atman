@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package v1;
+
+message Block {
+    BlockHeader header = 1;
+    repeated SignedTx txs = 2;
+}
+
+message BlockHeader {
+    bytes parent_hash = 1;
+    uint64 height = 2;
+    uint64 nonce = 3;
+    uint64 timestamp = 4;
+    bytes author = 5;
+    bytes txs_root = 6;
+}
+
+message SignedTx {
+    Tx tx = 1;
+    bytes signature = 2;
+}
+
+message Tx {
+    bytes sender = 1;
+    bytes receiver = 2;
+    uint64 amount = 3;
+    uint64 version = 4;
+    uint64 gas = 5;
+    uint64 gas_price = 6;
+    uint64 timestamp = 7;
+}
+
+enum Method {
+    Height = 0;
+    Blocks = 1;
+}
+
+message Request {
+    Method method = 1;
+    oneof body {
+        BlockHeightReq block_height_req = 2;
+        BlocksReq blocks_req = 3;
+    }
+}
+
+message BlockHeightReq {}
+
+message BlocksReq {
+    uint64 from_height = 1;
+}
+
+message Response {
+    Method method = 1;
+    oneof body {
+        BlockHeightResp block_height_resp = 2;
+        BlocksResp blocks_resp = 3;
+    }
+}
+
+message BlockHeightResp {
+    uint64 height = 1;
+}
+
+message BlocksResp {
+    repeated Block blocks = 1;
+}
