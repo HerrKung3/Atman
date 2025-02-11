@@ -117,6 +117,18 @@ impl <const T: usize>Display for Bytes<T> {
     }
 }
 
+impl From<wallet::signature::Signature> for Signature {
+    fn from(value: wallet::signature::Signature) -> Self {
+        Self(value.into())
+    }
+}
+
+impl From<Signature> for wallet::signature::Signature {
+    fn from(value: Signature) -> Self {
+        Self::from(value.0)
+    }
+}
+
 #[cfg(test)]
 mod test{
 

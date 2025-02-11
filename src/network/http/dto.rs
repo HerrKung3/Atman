@@ -16,7 +16,7 @@ pub struct Tx{
 }
 
 #[derive(Debug, Serialize)]
-pub struct  SignedTx {
+pub struct SignedTx {
     pub tx: Tx,
     pub signature: Signature,
 }
